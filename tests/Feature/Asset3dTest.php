@@ -6,6 +6,7 @@ use App\Models\Asset3d;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -112,5 +113,35 @@ class Asset3dTest extends TestCase
         $delRes = $this->deleteJson('/assets/'.$asset->id);
         $delRes->assertStatus(200);
         $this->assertDatabaseMissing('asset3ds', ['id' => $assetId]);
+    }
+
+    public function test_sso_login_from_portal(): void
+    {
+        Http::fake([
+            '*/api/sso/verify' => Http::response([
+                'valid' => true,
+                'user' => [
+                    'id' => 99,
+                    'name' => 'Mahsun SSO User',
+                    'email' => 'mahsun@portal.test',
+                    'department' => '3D Design',
+                    'role' => 'Designer',
+                ],
+            ], 200),
+        ]);
+
+        $response = $this->get('/?sso_token=valid_test_token_12345');
+
+        $response->assertRedirect(url('/'));
+        $this->assertAuthenticated();
+        $this->assertDatabaseHas('users', [
+            'email' => 'mahsun@portal.test',
+            'name' => 'Mahsun SSO User',
+        ]);
+    }
+
+    public function test_setup_hosting_routes(): void
+    {
+        $this->get('/setup-hosting/clear-cache')->assertStatus(200);
     }
 }

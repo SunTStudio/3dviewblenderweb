@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Asset3dController;
 use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 // Main 3D Studio Web App View
@@ -25,4 +26,28 @@ Route::middleware('auth')->prefix('assets')->name('assets.')->group(function () 
     Route::put('/{asset}', [Asset3dController::class, 'update'])->name('update');
     Route::delete('/{asset}', [Asset3dController::class, 'destroy'])->name('destroy');
     Route::post('/{asset}/thumbnail', [Asset3dController::class, 'uploadThumbnail'])->name('thumbnail');
+});
+
+// Hosting Utility Routes (For Shared Hosting without terminal)
+Route::prefix('setup-hosting')->group(function () {
+    Route::get('/storage-link', function () {
+        Artisan::call('storage:link');
+
+        return response('Symlink public/storage berhasil dibuat! Output: '.Artisan::output(), 200)
+            ->header('Content-Type', 'text/plain');
+    });
+
+    Route::get('/migrate', function () {
+        Artisan::call('migrate --force');
+
+        return response('Migrasi database berhasil dijalankan! Output: '.Artisan::output(), 200)
+            ->header('Content-Type', 'text/plain');
+    });
+
+    Route::get('/clear-cache', function () {
+        Artisan::call('optimize:clear');
+
+        return response('Cache berhasil dibersihkan! Output: '.Artisan::output(), 200)
+            ->header('Content-Type', 'text/plain');
+    });
 });

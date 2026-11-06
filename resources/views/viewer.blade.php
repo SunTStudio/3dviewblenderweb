@@ -4,12 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="app-url" content="{{ url('/') }}">
   <title>3D Studio - Cloud Web Viewer & Blender Hub</title>
   
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="{{ asset('style.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    window.APP_CONFIG = {
+      baseUrl: "{{ rtrim(url('/'), '/') }}",
+      portalUrl: "{{ config('portal.url', env('PORTAL_URL', '')) }}"
+    };
+  </script>
 
   <!-- Import Map for Three.js & Addons -->
   <script type="importmap">
@@ -80,6 +91,17 @@
             <button class="dropdown-item" data-demo="duck">🦆 Classic Toy Duck (Web GLTF)</button>
           </div>
         </div>
+
+        @if(config('portal.url', env('PORTAL_URL')))
+        <!-- Back to Master Portal -->
+        <a href="{{ rtrim(config('portal.url', env('PORTAL_URL')), '/') }}/portal" class="btn btn-secondary" title="Kembali ke Dashboard Portal Aplikasi">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>Portal Utama</span>
+        </a>
+        @endif
       </div>
 
       <div class="header-right">
@@ -490,7 +512,7 @@
   </div>
 
   <!-- Main JavaScript App -->
-  <script type="module" src="/js/app.js"></script>
+  <script type="module" src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>
 

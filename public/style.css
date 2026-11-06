@@ -1256,6 +1256,79 @@ input[type="range"]::-webkit-slider-thumb {
   to { opacity: 1; transform: scale(1); }
 }
 
+/* =========================================
+   SweetAlert2 Dark Aesthetic Styling
+   ========================================= */
+.swal2-popup.swal2-modal {
+  background: rgba(20, 25, 36, 0.96) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(99, 102, 241, 0.35) !important;
+  border-radius: var(--radius-xl) !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.8) !important;
+  font-family: var(--font-sans) !important;
+  padding: 24px !important;
+}
+
+.swal2-title {
+  color: #f8fafc !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+}
+
+.swal2-html-container {
+  color: #94a3b8 !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+
+.swal2-confirm {
+  background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+  color: #fff !important;
+  border-radius: var(--radius-md) !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  padding: 9px 22px !important;
+  box-shadow: 0 4px 14px var(--primary-glow) !important;
+  border: none !important;
+}
+
+.swal2-confirm:hover {
+  background: linear-gradient(135deg, #4f46e5, #4338ca) !important;
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4) !important;
+}
+
+.swal2-cancel {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #cbd5e1 !important;
+  border-radius: var(--radius-md) !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  padding: 9px 20px !important;
+  border: 1px solid var(--border-subtle) !important;
+}
+
+.swal2-cancel:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #fff !important;
+}
+
+.swal2-input {
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid var(--border-subtle) !important;
+  border-radius: var(--radius-md) !important;
+  color: #fff !important;
+  font-size: 13px !important;
+  padding: 10px 14px !important;
+  box-shadow: none !important;
+}
+
+.swal2-input:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 12px var(--primary-glow) !important;
+}
+
 /* Mobile responsive adjustments */
 @media (max-width: 768px) {
   .control-panel {

@@ -14,3 +14,4 @@ return [
 
     'verify_endpoint' => env('PORTAL_SSO_VERIFY_URL', null),
 ];
+

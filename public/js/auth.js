@@ -1,5 +1,6 @@
 export class AuthManager {
   constructor() {
+    this.baseUrl = window.APP_CONFIG?.baseUrl || '';
     this.currentUser = null;
     this.csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
     this.onAuthStateChange = null;
@@ -123,7 +124,7 @@ export class AuthManager {
 
   async checkAuthStatus() {
     try {
-      const res = await fetch('/auth/me', {
+      const res = await fetch(`${this.baseUrl}/auth/me`, {
         headers: { 'Accept': 'application/json' }
       });
       const data = await res.json();
@@ -140,7 +141,7 @@ export class AuthManager {
   async login(email, password) {
     this.clearAlerts();
     try {
-      const res = await fetch('/auth/login', {
+      const res = await fetch(`${this.baseUrl}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -166,7 +167,7 @@ export class AuthManager {
   async register(name, email, password) {
     this.clearAlerts();
     try {
-      const res = await fetch('/auth/register', {
+      const res = await fetch(`${this.baseUrl}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -191,7 +192,7 @@ export class AuthManager {
 
   async logout() {
     try {
-      await fetch('/auth/logout', {
+      await fetch(`${this.baseUrl}/auth/logout`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

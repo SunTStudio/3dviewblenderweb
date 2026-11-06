@@ -1,6 +1,7 @@
 export class FileManager {
   constructor(app) {
     this.app = app;
+    this.baseUrl = window.APP_CONFIG?.baseUrl || '';
     this.csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
     this.assets = [];
     this.currentActiveAsset = null;
@@ -84,7 +85,7 @@ export class FileManager {
   }
 
   async fetchAssets(query = '') {
-    const url = query ? `/assets?q=${encodeURIComponent(query)}` : '/assets';
+    const url = query ? `${this.baseUrl}/assets?q=${encodeURIComponent(query)}` : `${this.baseUrl}/assets`;
     try {
       this.elements.fmStatsInfo.textContent = 'Memuat model...';
       const res = await fetch(url, {
@@ -206,7 +207,7 @@ export class FileManager {
     formData.append('name', file.name.replace(/\.[^/.]+$/, ''));
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/assets', true);
+    xhr.open('POST', `${this.baseUrl}/assets`, true);
     xhr.setRequestHeader('Accept', 'application/json');
     xhr.setRequestHeader('X-CSRF-TOKEN', this.csrfToken);
 
@@ -280,7 +281,7 @@ export class FileManager {
     if (!newName || newName.trim() === '' || newName === asset.name) return;
 
     try {
-      const res = await fetch(`/assets/${asset.id}`, {
+      const res = await fetch(`${this.baseUrl}/assets/${asset.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -305,7 +306,7 @@ export class FileManager {
     if (!confirm(`Apakah Anda yakin ingin menghapus model "${asset.name}" dari akun Anda?`)) return;
 
     try {
-      const res = await fetch(`/assets/${asset.id}`, {
+      const res = await fetch(`${this.baseUrl}/assets/${asset.id}`, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',
@@ -331,7 +332,7 @@ export class FileManager {
   async captureAndSaveThumbnail(assetId) {
     const dataUrl = this.app.viewer.getSnapshotDataUrl();
     try {
-      const res = await fetch(`/assets/${assetId}/thumbnail`, {
+      const res = await fetch(`${this.baseUrl}/assets/${assetId}/thumbnail`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
