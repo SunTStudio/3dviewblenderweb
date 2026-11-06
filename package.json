@@ -1,0 +1,13 @@
+{
+  "name": "web-3d-viewer",
+  "version": "1.0.0",
+  "description": "Interactive Web 3D Viewer for Blender Assets (GLTF / GLB)",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["threejs", "3d", "viewer", "blender", "gltf", "glb"],
+  "author": "",
+  "license": "MIT"
+}
